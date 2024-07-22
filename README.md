@@ -30,7 +30,9 @@ If a player has 21 points already, they win immediately.
 If nobody has reached 21 points, the program asks the players - one by one - if they want another card.
 In case a player reaches 21 points or two aces, the winner is declared.
 Otherwise, the program continues asking until no player wants more cards.
+
 Then, the program draws further cards for the bank. If the program itself reaches 21 or two aces, the bank wins and all other players lose.
+
 If the bank ends up with more than 21 points, the bank loses and the other players' cards will be evaluated.
 In this case, the player with the most points wins the game and the game ends.
 </p>
