@@ -4,7 +4,7 @@ This is a simple variant of the card game twenty-one implemented using Python, i
 <h2>Rules</h2>
 
 <p>
-<h3>Cards:</h3> 2, 3, 4, 5, 6, 7, 8, 9, 10, jack, queen, king and ace in all four suits (clubs ♣, spades ♠, hearts ♥ and diamonds ♦.
+<h3>Cards:</h3> 2, 3, 4, 5, 6, 7, 8, 9, 10, jack, queen, king and ace in all four suits (clubs ♣, spades ♠, hearts ♥ and diamonds ♦).
   
 <h3>Card Values:</h3> 
 <ul>
