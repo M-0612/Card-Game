@@ -82,7 +82,7 @@ def declare_winner(player_scores: Dict[str, int], dealer_score: int):
         else:
             print(f"The dealer wins with 21 points!\n")
     elif players_with_21:
-        print(f"The winner(s): {', '.join(players_with_21)} with 21 points!")
+        print(f"The winner(s): {', '.join(players_with_21)} with 21 points!\n")
     elif all(score > 21 for score in player_scores.values()):
         print(f"All players have lost. The dealer wins.\n")
     else:
@@ -92,10 +92,10 @@ def declare_winner(player_scores: Dict[str, int], dealer_score: int):
             print(f"The dealer busts! The winner(s): {', '.join(winners)} with {closest_score} points!\n")
         elif dealer_score == closest_score:
             print(f"Tie! Both the bank and player(s) {', '.join(winners)} have {closest_score} points.\n")
-        elif bank_score > closest_score:
-            print(f"The dealer wins with {dealer_score} points!")
+        elif dealer_score > closest_score:
+            print(f"The dealer wins with {dealer_score} points!\n")
         else:
-            print(f"The winner(s): {', '.join(winners)} with {closest_score} points!")
+            print(f"The winner(s): {', '.join(winners)} with {closest_score} points!\n")
 
 def main():
     # Initialize players
@@ -113,7 +113,7 @@ def main():
     # Players receive first card each
     for player in players:
         card_name, card_score = draw_card(card_set)
-        print(f"{player} receives {card_name}.")
+        print(f"{player} draws {card_name}.")
         update_cards(player_cards[player], card_name, card_score)
         current_score = calculate_score(player_cards[player])
         print(f"{player}'s score is now {current_score}.\n")
@@ -142,6 +142,7 @@ def main():
                 break
             # Players are asked if they want further cards
             choice = input(f"{player}, do you want another card? (y/n): ").lower()
+            print("")
             if choice == 'n':
                 print()
                 break
