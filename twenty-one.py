@@ -13,7 +13,7 @@ def initialize_card_set() -> Dict[str, int]:
     point_dict = {2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 11}
     suits = ['of Clubs', 'of Spades', 'of Hearts', 'of Diamonds']
 
-    # Iterate over point dict, combining each key with each suit and store as key:value pair in card set
+    # Iterate over point dict, combining each key:value pari with each suit and store as new key:value pair in card set
     return {f"{card} {suit}": point for card, point in point_dict.items() for suit in suits}
 
 # Initalize players
@@ -41,25 +41,29 @@ def initialize_players(max_players: int) -> List[str]:
             else:
                 print(f"Please enter a number from 1 to 4.")
 
-        # If input is not a number, go back
+        # If input is not a number, start over
         except ValueError:
             print(f"Invalid input. Please enter a number.")
 
-    # Initialize list of players, to store names
+    # Ask for players' names
     return [input(f"Name of player {i + 1}: ") for i in range(player_number)]
 
 
 # Draw a random card from the card set
 def draw_card(card_set: Dict[str, int]) -> Tuple[str, int]:
-    card_name, card_score = random.choice(list(card_set.items()))
-    # Remove card from the card set and return its value
+    card_name = random.choice(list(card_set.keys()))
+    # Remove card from the card set and return its name and value
     return card_name, card_set.pop(card_name)
 
 # Add drawn card to cards of players/ dealer
+# When passing in the dict of a player, e.g. player_cards['Alice'], the func 
+# has direct access to this player's dict of cards with card names as keys and 
+# card scores as values
 def update_cards(cards_dict: Dict[str, int], card_name: str, card_score: int):
     cards_dict[card_name] = card_score
 
 # Calculate points of player or dealer
+# cards_dict = dict of certain player, i.e. cards_dict['Alice']
 def calculate_score(cards_dict: Dict[str, int]) -> int:
     total_score = sum(cards_dict.values())
     # Adjust for Aces if total score exceeds 21 (reduce 10 points per Ace)
@@ -74,7 +78,7 @@ def declare_winner(player_scores: Dict[str, int], dealer_score: int):
     players_with_21 = [name for name, score in player_scores.items() if score == 21]
     if dealer_score == 21:
         if players_with_21:
-            print(f"Tie! Both the bank and player(s) {', '.join(players_with_21)} have 21 points.\n")
+            print(f"Tie! Both the dealer and player(s) {', '.join(players_with_21)} have 21 points.\n")
         else:
             print(f"The dealer wins with 21 points!\n")
     elif players_with_21:
@@ -90,12 +94,16 @@ def declare_winner(player_scores: Dict[str, int], dealer_score: int):
             print(f"The winner(s): {', '.join(winners)} with {closest_score} points!")
 
 def main():
+    # Initialize players
     max_players = 4
     card_set = initialize_card_set()
     players = initialize_players(max_players)
-    player_cards = {player: {} for player in players}
-    dealer_cards = {}
 
+    # Initialize dicts for cards held by players/dealer
+    dealer_cards = {}
+    # Creates a dict holding players' names as keys and a dictionary with their drawn cards as values
+    player_cards = {player: {} for player in players}
+    
     print(f"\nFirst Round: Start\n")
 
     # Players receive first card each
