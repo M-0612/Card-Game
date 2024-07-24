@@ -8,7 +8,7 @@ import sys
 import time
 from typing import Tuple, Dict, List
 
-# Initialize set of 32 cards
+# Initialize set of 52 cards
 def initialize_card_set() -> Dict[str, int]:
     point_dict = {2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 11}
     suits = ['of Clubs', 'of Spades', 'of Hearts', 'of Diamonds']
