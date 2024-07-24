@@ -8,15 +8,13 @@ This is a simple variant of the card game twenty-one implemented using Python, i
   
 <h3>Card Values:</h3> 
 <ul>
-  <li>Ace: 1 or 11 points</li>
+  <li>Ace: 1 or 11 points (in general, 11 points, unless that would result in a score over 21 points. In this case, it takes the value of 1.) </li>
   <li>King: 10 points</li>
   <li>Queen: 10 points</li>
   <li>Jack: 10 points</li>
   <li>Numbers: as stated</li>
-
-  <li>'Black Jack' i.e. 21 points: Ace and 10 or Ace and King, Queen or Jack</li>
-
-  <li>Ace: An Ace will have a value of 11 unless that would give a player or the dealer a score in excess of 21; in which case, it has a value of 1.</li>
+  <br>
+  <li>'Black Jack' i.e. the combinations of Ace and 10 or Ace and King/ Queen/ Jack: 21 points</li>
 </ul>
 
 <h3>Description:</h3>
