@@ -75,27 +75,33 @@ def calculate_score(cards_dict: Dict[str, int]) -> int:
 
 # Determine and declare winner
 def declare_winner(player_scores: Dict[str, int], dealer_score: int):
-    players_with_21 = [name for name, score in player_scores.items() if score == 21]
-    if dealer_score == 21:
-        if players_with_21:
-            print(f"Tie! Both the dealer and player(s) {', '.join(players_with_21)} have 21 points.\n")
-        else:
-            print(f"The dealer wins with 21 points!\n")
-    elif players_with_21:
-        print(f"The winner(s): {', '.join(players_with_21)} with 21 points!\n")
-    elif all(score > 21 for score in player_scores.values()):
-        print(f"All players have lost. The dealer wins.\n")
+    # Combine players' scores and dealer's score in one dict
+    all_scores = {**player_scores, 'Dealer': dealer_score}
+    # Filter out scores over 21
+    valid_scores = {name: score for name, score in all_scores.items() if score <= 21}
+
+    # If there is no valid score
+    if not valid_scores:
+        print("All players have lost. The dealer wins.\n")
+        return
+    
+    # Identify the maximum score up to 21 and the winners
+    max_score = max(valid_scores.values())
+    winners = [name for name, score in valid_scores.items() if score == max_score]
+
+    # If only dealer has won
+    if 'Dealer' in winners and len(winners) == 1:
+        print(f"The dealer wins with {max_score} points!\n")
+    # If the dealer and other players have the max score
+    elif 'Dealer' in winners:
+        winners.remove('Dealer') # So print text is correct
+        print(f"Tie! The dealer and player(s) {', '.join(winners)} have {max_score} points.\n")
+    # If the dealer's score exceeds 21 points
+    elif dealer_score > 21:
+        print(f"The dealer busts. The winner(s): {', '.join(winners)} with {max_score} points!\n")
+    # If the dealer does not have the max score
     else:
-        closest_score = max(score for score in player_scores.values() if score < 21)
-        winners = [name for name, score in player_scores.items() if score == closest_score]
-        if dealer_score > 21:
-            print(f"The dealer busts! The winner(s): {', '.join(winners)} with {closest_score} points!\n")
-        elif dealer_score == closest_score:
-            print(f"Tie! Both the bank and player(s) {', '.join(winners)} have {closest_score} points.\n")
-        elif dealer_score > closest_score:
-            print(f"The dealer wins with {dealer_score} points!\n")
-        else:
-            print(f"The winner(s): {', '.join(winners)} with {closest_score} points!\n")
+        print(f"The winner(s): {', '.join(winners)} with {max_score} points!\n")
 
 def main():
     # Initialize players
@@ -108,6 +114,7 @@ def main():
     # Creates a dict holding players' names as keys and a dictionary with their drawn cards as values
     player_cards = {player: {} for player in players}
     
+    time.sleep(0.5)
     print(f"\nFirst Round: Start\n")
 
     # Players receive first card each
@@ -125,6 +132,7 @@ def main():
     dealer_score = calculate_score(dealer_cards)
     print(f"The dealer's score is now {dealer_score}.\n")
 
+    time.sleep(0.5)
     print("Second Round: Start\n")
 
     # Players receive second card each
@@ -144,10 +152,9 @@ def main():
             choice = input(f"{player}, do you want another card? (y/n): ").lower()
             print("")
             if choice == 'n':
-                print()
                 break
-            time.sleep(0.5)
-
+            
+    time.sleep(0.5)
     print("It's the dealer's turn.\n")
 
     # Dealer round
