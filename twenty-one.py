@@ -88,7 +88,11 @@ def declare_winner(player_scores: Dict[str, int], dealer_score: int):
     else:
         closest_score = max(score for score in player_scores.values() if score < 21)
         winners = [name for name, score in player_scores.items() if score == closest_score]
-        if dealer_score <= 21 and dealer_score >= closest_score:
+        if dealer_score > 21:
+            print(f"The dealer busts! The winner(s): {', '.join(winners)} with {closest_score} points!\n")
+        elif dealer_score == closest_score:
+            print(f"Tie! Both the bank and player(s) {', '.join(winners)} have {closest_score} points.\n")
+        elif bank_score > closest_score:
             print(f"The dealer wins with {dealer_score} points!")
         else:
             print(f"The winner(s): {', '.join(winners)} with {closest_score} points!")
